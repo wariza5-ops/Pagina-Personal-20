@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wendy — Diseñadora Visual & Creativa Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --bg-dark: #060612;
+      --bg-mid: #0d0b1e;
+      --bg-card: #110f22;
+      --purple-deep: #2a0a5e;
+      --purple-main: #7b2ff7;
+      --purple-light: #a855f7;
+      --purple-glow: #c084fc;
+      --purple-neon: #d946ef;
+      --accent-pink: #e879f9;
+      --text-white: #ffffff;
+      --text-light: #e2d9f3;
+      --text-muted: #9d8bc0;
+      --border-purple: rgba(168, 85, 247, 0.25);
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-white);
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--purple-main); border-radius: 3px; }
+
+    /* ===== BACKGROUND PARTICLES ===== */
+    .particles {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .particles span {
+      position: absolute; border-radius: 50%;
+      background: var(--purple-glow);
+      animation: float linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(6,6,18,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-purple);
+    }
+    .nav-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: var(--text-white);
+      letter-spacing: 1px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-logo .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--purple-main);
+      box-shadow: 0 0 10px var(--purple-main);
+    }
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-light);
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px;
+      background: var(--purple-main); transform: scaleX(0);
+      transition: transform 0.3s; transform-origin: left;
+    }
+    .nav-links a:hover { color: var(--purple-glow); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* ===== HERO SECTION ===== */
+    #inicio {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 120px 60px 80px;
+    }
+
+    /* Glowing wave background */
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 65% 60%, rgba(123,47,247,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 80%, rgba(217,70,239,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 40% at 20% 30%, rgba(123,47,247,0.15) 0%, transparent 60%);
+    }
+    .hero-wave {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 0;
+      height: 300px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 300'%3E%3Cpath fill='rgba(123,47,247,0.15)' d='M0,160 C360,260 1080,60 1440,200 L1440,300 L0,300 Z'/%3E%3Cpath fill='rgba(217,70,239,0.08)' d='M0,200 C480,100 960,280 1440,160 L1440,300 L0,300 Z'/%3E%3C/svg%3E") no-repeat bottom;
+      background-size: cover;
+    }
+
+    /* Hero glow circle behind avatar */
+    .hero-circle {
+      position: absolute; right: 8%; top: 50%;
+      transform: translateY(-50%);
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(123,47,247,0.5) 0%, rgba(123,47,247,0.1) 50%, transparent 70%);
+      box-shadow: 0 0 120px rgba(123,47,247,0.6), 0 0 200px rgba(123,47,247,0.3);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 520px;
+    }
+    .hero-greeting {
+      font-size: 1.1rem; font-weight: 300; color: var(--text-muted);
+      letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .hero-title-main {
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 900; letter-spacing: -1px; line-height: 1;
+      text-transform: uppercase; color: var(--text-white);
+      margin-bottom: 4px;
+    }
+    .hero-title-sub {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--purple-light);
+      line-height: 1.2; margin-bottom: 24px;
+    }
+    .hero-desc {
+      font-size: 0.9rem; line-height: 1.8;
+      color: var(--text-muted); max-width: 380px; margin-bottom: 36px;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--purple-main);
+      color: #fff; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 14px 32px; border-radius: 50px;
+      border: none; cursor: pointer;
+      box-shadow: 0 0 30px rgba(123,47,247,0.6);
+      transition: all 0.3s;
+    }
+    .btn-primary:hover {
+      background: var(--purple-light);
+      box-shadow: 0 0 50px rgba(168,85,247,0.8);
+      transform: translateY(-2px);
+    }
+    .btn-primary .arrow {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .hero-avatar {
+  position: absolute; right: 1%; top: 60%;
+  transform: translateY(-50%);
+  z-index: 3; width: 1200px;
+  filter: drop-shadow(0 0 40px rgba(123,47,247,0.5));
+  animation: avatarFloat 6s ease-in-out infinite;
+}
+    @keyframes avatarFloat {
+      0%, 100% { transform: translateY(-50%) translateY(0px); }
+      50%       { transform: translateY(-50%) translateY(-15px); }
+    }
+
+    /* Hero tagline right */
+    .hero-tagline {
+      position: absolute; right: 3%; top: 20%;
+      z-index: 4;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem; color: var(--text-light);
+      line-height: 1.6; text-align: center;
+      opacity: 0.85;
+    }
+
+    /* ===== SECTION SHARED ===== */
+    section { position: relative; z-index: 1; }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--purple-glow);
+      margin-bottom: 6px;
+    }
+    .section-label::after {
+      content: ''; display: inline-block; width: 40px; height: 2px;
+      background: var(--purple-main); margin-left: 10px; vertical-align: middle;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700; color: var(--text-white); margin-bottom: 16px;
+    }
+    .section-title span { color: var(--purple-light); }
+
+    /* ===== SOBRE MI ===== */
+    #sobre-mi {
+      padding: 100px 0;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-mid) 100%);
+    }
+    .sobre-grid {
+      display: grid; grid-template-columns: 1fr 340px 1fr;
+      gap: 60px; align-items: center;
+    }
+    .sobre-text p {
+      font-size: 0.9rem; line-height: 1.9; color: var(--text-muted);
+    }
+    .sobre-photo {
+      position: relative;
+    }
+    .sobre-photo img {
+      width: 100%; border-radius: 16px;
+      box-shadow: 0 0 60px rgba(123,47,247,0.4);
+      border: 1px solid var(--border-purple);
+    }
+    .sobre-photo::before {
+      content: ''; position: absolute;
+      inset: -8px; border-radius: 20px;
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-neon), transparent);
+      z-index: -1; opacity: 0.5;
+    }
+
+    /* Habilidades */
+    .habilidades-list { display: flex; flex-direction: column; gap: 28px; }
+    .habilidad-item { display: flex; align-items: flex-start; gap: 18px; }
+    .habilidad-icon {
+      width: 52px; height: 52px; flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(123,47,247,0.15);
+      border: 1px solid var(--border-purple);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .habilidad-info h4 {
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-white); margin-bottom: 4px;
+    }
+    .habilidad-info p {
+      font-size: 0.78rem; line-height: 1.6; color: var(--text-muted);
+    }
+
+    /* ===== PROYECTOS ===== */
+    #proyectos {
+      padding: 100px 0;
+      background: var(--bg-mid);
+    }
+    .proyectos-header {
+      text-align: center; margin-bottom: 60px;
+    }
+    .proyectos-header .section-label::after { display: none; }
+    .proyectos-header .section-label::before {
+      content: ''; display: inline-block; width: 40px; height: 2px;
+      background: var(--purple-main); margin-right: 10px; vertical-align: middle;
+    }
+    .proyectos-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .proyecto-card {
+      background: var(--bg-card);
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border-purple);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .proyecto-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(123,47,247,0.4);
+    }
+    .proyecto-img {
+      width: 100%; height: 200px; object-fit: cover;
+      display: block;
+    }
+    /* Placeholder coloured images */
+    .proyecto-img-ph {
+      width: 100%; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; font-weight: 900; letter-spacing: -2px;
+      color: rgba(255,255,255,0.15);
+    }
+    .ph-1 { background: linear-gradient(135deg, #1a0a3e 0%, #3b0764 50%, #7c3aed 100%); }
+    .ph-2 { background: linear-gradient(135deg, #0c1a1a 0%, #064e3b 50%, #10b981 100%); }
+    .ph-3 { background: linear-gradient(135deg, #1a0a0a 0%, #4c0519 50%, #be185d 100%); }
+    .ph-4 { background: linear-gradient(135deg, #1a1208 0%, #451a03 50%, #b45309 100%); }
+
+    .proyecto-body { padding: 20px; }
+    .proyecto-tag {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--purple-light);
+      margin-bottom: 6px;
+    }
+    .proyecto-titulo {
+      font-size: 0.9rem; font-weight: 700; color: var(--text-white);
+      margin-bottom: 8px;
+    }
+    .proyecto-desc {
+      font-size: 0.75rem; line-height: 1.6; color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .proyecto-link {
+      display: flex; align-items: center; justify-content: flex-end;
+    }
+    .proyecto-link .arrow-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--purple-main);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: #fff;
+      box-shadow: 0 0 20px rgba(123,47,247,0.5);
+      transition: all 0.3s;
+    }
+    .proyecto-link .arrow-btn:hover {
+      background: var(--purple-light);
+      box-shadow: 0 0 30px rgba(168,85,247,0.8);
+    }
+
+    /* ===== VALUES STRIP ===== */
+    #valores {
+      padding: 80px 0;
+      background: linear-gradient(180deg, var(--bg-mid) 0%, #0a0820 100%);
+      position: relative; overflow: hidden;
+    }
+    #valores::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(123,47,247,0.2) 0%, transparent 70%);
+    }
+    .valores-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+      position: relative; z-index: 1;
+    }
+    .valor-item { text-align: center; }
+    .valor-icon {
+      font-size: 1.8rem; margin-bottom: 14px;
+      display: block;
+    }
+    .valor-item h4 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-white); margin-bottom: 10px;
+    }
+    .valor-item p {
+      font-size: 0.75rem; line-height: 1.7; color: var(--text-muted);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #05040f;
+      border-top: 1px solid var(--border-purple);
+      padding: 60px 0 30px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 60px; margin-bottom: 50px;
+    }
+    .footer-brand .nav-logo { font-size: 1.8rem; margin-bottom: 16px; }
+    .footer-brand p {
+      font-size: 0.78rem; line-height: 1.8; color: var(--text-muted); max-width: 240px;
+    }
+    .footer-copy {
+      font-size: 0.65rem; color: var(--purple-light);
+      margin-top: 14px; font-style: italic;
+    }
+    .footer-contact h5 {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--text-white); margin-bottom: 18px;
+    }
+    .footer-contact ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.78rem; color: var(--text-muted);
+    }
+    .footer-contact li .ico { color: var(--purple-light); font-size: 0.9rem; }
+    .footer-social h5 {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--text-white); margin-bottom: 18px;
+    }
+    .social-icons { display: flex; gap: 12px; }
+    .social-icon {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(123,47,247,0.15);
+      border: 1px solid var(--border-purple);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--text-light);
+      transition: all 0.3s; cursor: pointer;
+    }
+    .social-icon:hover {
+      background: var(--purple-main);
+      border-color: var(--purple-main);
+      box-shadow: 0 0 20px rgba(123,47,247,0.6);
+      color: #fff;
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--border-purple);
+      padding-top: 24px; text-align: center;
+    }
+    .footer-bottom p {
+      font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px;
+    }
+    .footer-bottom span { color: var(--purple-light); }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--purple-main) 50%, transparent 100%);
+      opacity: 0.4;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 20px; }
+      #inicio { padding: 120px 24px 80px; }
+      .hero-avatar { display: none; }
+      .hero-circle { display: none; }
+      .hero-tagline { display: none; }
+      .section-inner { padding: 0 24px; }
+      .sobre-grid { grid-template-columns: 1fr; }
+      .proyectos-grid { grid-template-columns: 1fr 1fr; }
+      .valores-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .proyectos-grid { grid-template-columns: 1fr; }
+      .valores-grid { grid-template-columns: 1fr; }
+    }
+    .modal-overlay{position:fixed;inset:0;background:rgba(6,6,18,0.95);z-index:200;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 20px;opacity:0;visibility:hidden;transition:opacity 0.3s,visibility 0.3s;}
+.modal-overlay.open{opacity:1;visibility:visible;}
+.modal{background:#110f22;border:1px solid rgba(168,85,247,0.25);border-radius:20px;width:100%;max-width:900px;overflow:hidden;transform:translateY(40px);transition:transform 0.3s;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-hero{position:relative;padding:50px;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(123,47,247,0.3) 0%,transparent 70%);}
+.modal-close{position:absolute;top:20px;right:20px;width:38px;height:38px;border-radius:50%;background:rgba(123,47,247,0.2);border:1px solid rgba(168,85,247,0.25);color:#e2d9f3;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.modal-close:hover{background:#7b2ff7;}
+.modal-tag{font-size:0.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#a855f7;margin-bottom:10px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;margin-bottom:12px;}
+.modal-subtitle{font-size:0.85rem;color:#9d8bc0;max-width:560px;line-height:1.8;}
+.modal-body{display:grid;grid-template-columns:1fr 280px;gap:40px;padding:40px 50px;align-items:start;}
+.modal-main-img{width:100%;border-radius:14px;border:1px solid rgba(168,85,247,0.25);height:700px;object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:24px;}
+.modal-desc-label{font-size:0.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#c084fc;margin-bottom:12px;}
+.modal-desc p{font-size:0.82rem;line-height:1.9;color:#9d8bc0;margin-bottom:12px;}
+.info-card{background:#0d0b1e;border:1px solid rgba(168,85,247,0.25);border-radius:14px;padding:22px;margin-bottom:18px;}
+.info-card h4{font-size:0.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#c084fc;margin-bottom:16px;}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(168,85,247,0.1);font-size:0.75rem;}
+.info-row:last-child{border-bottom:none;}
+.info-row span:first-child{color:#9d8bc0;}
+.info-row span:last-child{color:#e2d9f3;font-weight:600;}
+.tools-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.tool-badge{background:rgba(123,47,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:20px;padding:5px 14px;font-size:0.65rem;font-weight:600;color:#c084fc;letter-spacing:1px;}
+  </style>
+</head>
+<body>
+
+  <!-- PARTICLES -->
+  <div class="particles" id="particles"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">
+      Wendy <span class="dot"></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#sobre-mi">Sobre Mí</a></li>
+      <li><a href="#habilidades">Habilidades</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-wave"></div>
+    <div class="hero-circle"></div>
+
+    <div class="hero-content fade-in">
+      <p class="hero-greeting">Hola, soy Wendy</p>
+      <h1 class="hero-title-main">Diseñadora Visual</h1>
+      <h2 class="hero-title-sub">&amp; Creativa Digital</h2>
+      <p class="hero-desc">
+        Transformo ideas en composiciones visuales que comunican, inspiran
+        y conectan con las personas a través del diseño.
+      </p>
+      <a href="#proyectos" class="btn-primary">
+        Ver Proyectos
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Decorative tagline -->
+    <div class="hero-tagline fade-in">
+      Diseño con<br>intención,<br>creatividad<br>que conecta
+    </div>
+
+    <!-- Avatar placeholder (replace src with real image) -->
+    <img
+      class="hero-avatar"
+      src="img/Banner-Photoroom.png"
+      alt="Wendy — Diseñadora Visual"
+    />
+  </section>
+
+  <!-- SOBRE MI -->
+  <section id="sobre-mi">
+    <div class="section-inner">
+      <div class="sobre-grid">
+        <!-- Left text -->
+        <div class="fade-in">
+          <p class="section-label">Sobre Mi</p>
+          <h2 class="section-title">Conoce más <span>sobre mí</span></h2>
+          <p>
+            Soy estudiante de Publicidad y Marketing Digital con una fuerte pasión
+            por el diseño visual y la comunicación creativa. Me inspira transformar
+            ideas en composiciones gráficas que conecten con las personas y
+            transmitan mensajes de forma auténtica e impactante.
+          </p>
+        </div>
+
+        <!-- Photo -->
+        <div class="sobre-photo fade-in">
+          <img
+            src="img/Sobre-mi.png"
+            alt="Wendy Ariza"
+          />
+        </div>
+
+        <!-- Habilidades right -->
+        <div id="habilidades" class="fade-in">
+          <p class="section-label">Habilidades</p>
+          <div class="habilidades-list">
+            <div class="habilidad-item">
+              <div class="habilidad-icon">✏️</div>
+              <div class="habilidad-info">
+                <h4>Diseño Visual</h4>
+                <p>Creación de piezas gráficas con identidad, equilibrio visual y una propuesta estética sólida.</p>
+              </div>
+            </div>
+            <div class="habilidad-item">
+              <div class="habilidad-icon">🧠</div>
+              <div class="habilidad-info">
+                <h4>Composición Creativa</h4>
+                <p>Integración estratégica de color, tipografía y elementos visuales para construir composiciones impactantes.</p>
+              </div>
+            </div>
+            <div class="habilidad-item">
+              <div class="habilidad-icon">🎬</div>
+              <div class="habilidad-info">
+                <h4>Dirección Visual</h4>
+                <p>Desarrollo de conceptos visuales que comunican ideas, emociones y mensajes de forma clara y memorable.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROYECTOS -->
+  <section id="proyectos">
+    <div class="section-inner">
+      <div class="proyectos-header fade-in">
+        <p class="section-label">Proyectos Destacados</p>
+      </div>
+      <div class="proyectos-grid">
+
+        <!-- Card 1 -->
+        <div class="proyecto-card fade-in" onclick="abrirModal('mario')">
+          <img src="img/Mario-convertido-a-285x304.jpeg" class="proyecto-img" alt="Universo Mario"/>
+          <div class="proyecto-body">
+            <p class="proyecto-tag">Infografía Visual</p>
+            <h3 class="proyecto-titulo">Universo Mario</h3>
+            <p class="proyecto-desc">Diseño editorial e infográfico enfocado en organizar información visual de forma dinámica, comunicativa y narrativa.</p>
+            <div class="proyecto-link">
+              <span class="arrow-btn">→</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="proyecto-card fade-in" onclick="abrirModal('perros')">
+          <img src="img/Los-perros-criollos-1.jpeg" class="proyecto-img" alt="Los Perros Criollos"/>
+          <div class="proyecto-body">
+            <p class="proyecto-tag">Flyer Promocional</p>
+            <h3 class="proyecto-titulo">Los Perros Criollos</h3>
+            <p class="proyecto-desc">Diseño publicitario creado para comunicar el éxito de convocatoria del show, destacando de forma visual la boletería agotada y la identidad del evento.</p>
+            <div class="proyecto-link">
+              <span class="arrow-btn">→</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="proyecto-card fade-in" onclick="abrirModal('ouija')">
+          <img src="img/Ouija-convertido-a-600x400-convertido-a-285x304.jpeg" class="proyecto-img" alt="Ouija"/>
+          <div class="proyecto-body">
+            <p class="proyecto-tag">Portada Conceptual</p>
+            <h3 class="proyecto-titulo">Ouija</h3>
+            <p class="proyecto-desc">Diseño cinematográfico conceptual desarrollado para transmitir misterio, tensión y atmósfera visual mediante composición dramática.</p>
+            <div class="proyecto-link">
+              <span class="arrow-btn">→</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="proyecto-card fade-in" onclick="abrirModal('vino')">
+          <img src="img/_MG_0012-convertido-a-285x304.jpeg" class="proyecto-img" alt="Arte Visual"/>
+          <div class="proyecto-body">
+            <p class="proyecto-tag">Dirección Fotográfica</p>
+            <h3 class="proyecto-titulo">Arte Visual</h3>
+            <p class="proyecto-desc">Creación de imágenes con intención estética y narrativa, donde la fotografía se convierte en una extensión del diseño y la comunicación visual.</p>
+            <div class="proyecto-link">
+              <span class="arrow-btn">→</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES STRIP -->
+  <section id="valores">
+    <div class="section-inner">
+      <div class="valores-grid">
+        <div class="valor-item fade-in">
+          <span class="valor-icon">👁️</span>
+          <h4>Diseño con Propósito</h4>
+          <p>Diseño con intención, creatividad y enfoque visual para crear piezas que comuniquen y conecten.</p>
+        </div>
+        <div class="valor-item fade-in">
+          <span class="valor-icon">👂</span>
+          <h4>Escucha Creativa</h4>
+          <p>Comprender la visión y esencia de cada proyecto para construir propuestas visuales auténticas y alineadas con su propósito.</p>
+        </div>
+        <div class="valor-item fade-in">
+          <span class="valor-icon">✏️</span>
+          <h4>Diseño con Intención</h4>
+          <p>Cada elemento visual, color y composición se trabaja con una intención clara para comunicar de forma efectiva y memorable.</p>
+        </div>
+        <div class="valor-item fade-in">
+          <span class="valor-icon">❤️</span>
+          <h4>Conexión Emocional</h4>
+          <p>Crear piezas gráficas que no solo impacten visualmente, sino que también conecten con el público y generen satisfacción.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contacto">
+    <div class="section-inner">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand fade-in">
+          <div class="nav-logo">Wendy <span class="dot"></span></div>
+          <p>Cada gran idea merece una identidad que la represente. Desearía desarrollar un proyecto creativo, estaré feliz de hacerlo realidad contigo.</p>
+          <p class="footer-copy">© 2026 Wendy Ariza — Diseño visual con propósito</p>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-contact fade-in">
+          <h5>Contáctame</h5>
+          <ul>
+            <li><span class="ico">✉</span> Wendyarizaarrieta2001@gmail.com</li>
+            <li><span class="ico">📱</span> +57 3184107735</li>
+            <li><span class="ico">📍</span> Colombia</li>
+          </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-social fade-in">
+          <h5>Sígueme</h5>
+          <div class="social-icons">
+  <a href="https://www.instagram.com/wendyariza_?igsh=bm1kaHl0dWtsdHl6" class="social-icon" title="Instagram">📸</a>
+  <a href="https://www.behance.net/wendyariza1" class="social-icon" title="Behance">🅱</a>
+  <a href="mailto:Wendyarizaarrieta2001@gmail.com" class="social-icon" title="Email">✉</a>
+  <a href="https://github.com/settings/profile" class="social-icon" title="GitHub">⚙</a>
+</div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 <span>Wendy Ariza</span> — Diseño visual con propósito</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    /* ===== PARTICLES ===== */
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('span');
+      const size = Math.random() * 4 + 1;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        animation-duration:${Math.random()*15+8}s;
+        animation-delay:${Math.random()*10}s;
+      `;
+      container.appendChild(s);
+    }
+
+    /* ===== SCROLL FADE-IN ===== */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* Trigger hero immediately */
+    document.querySelectorAll('#inicio .fade-in').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 300);
+    });
+  </script>
+  <!-- Modal Mario -->
+<div class="modal-overlay" id="modal-mario">
+  <div class="modal">
+    <div class="modal-hero">
+      <button class="modal-close" onclick="cerrarModal('mario')">✕</button>
+      <p class="modal-tag">Infografía Visual</p>
+      <h2 class="modal-title">Universo Mario</h2>
+      <p class="modal-subtitle">Diseño editorial e infográfico enfocado en organizar información visual de forma dinámica, comunicativa y con narrativa gráfica clara.</p>
+    </div>
+    <div class="modal-body">
+      <div>
+        <img src="img/Mario-2.jpg" class="modal-main-img" alt="Universo Mario" style="object-fit:cover;"/>
+        <p class="modal-desc-label">Sobre el proyecto</p>
+        <div class="modal-desc">
+          <p>"Universo Mario" es una infografía editorial diseñada para presentar de manera dinámica la historia y evolución de una de las franquicias más importantes de los videojuegos. A través de una composición visual organizada y una línea de tiempo ilustrada, se busca facilitar la comprensión de la información mientras se mantiene una experiencia visual atractiva.</p>
+          <p>El proyecto integra principios de diseño editorial, jerarquía visual y narrativa gráfica para transformar datos y referencias históricas en una pieza comunicativa clara y entretenida.</p>
+        </div>
+      </div>
+      <div>
+        <div class="info-card">
+          <h4>Detalles</h4>
+          <div class="info-row"><span>Categoría</span><span>Infografía Visual</span></div>
+          <div class="info-row"><span>Año</span><span>2026</span></div>
+          <div class="info-row"><span>Tipo</span><span>Personal</span></div>
+          <div class="info-row"><span>Formato</span><span>Digital</span></div>
+        </div>
+        <div class="info-card">
+          <h4>Herramientas</h4>
+          <div class="tools-wrap">
+            <span class="tool-badge">Photoshop</span>
+            <span class="tool-badge">Illustrator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Perros Criollos -->
+<div class="modal-overlay" id="modal-perros">
+  <div class="modal">
+    <div class="modal-hero">
+      <button class="modal-close" onclick="cerrarModal('perros')">✕</button>
+      <p class="modal-tag">Flyer Promocional</p>
+      <h2 class="modal-title">Los Perros Criollos</h2>
+      <p class="modal-subtitle">Diseño publicitario creado para comunicar el éxito de convocatoria del show, destacando la boletería agotada y la identidad del evento.</p>
+    </div>
+    <div class="modal-body">
+      <div>
+        <img src="img/Los-perros-criollos-2.png"class="modal-main-img" alt="Los Perros Criollos" style="object-fit:cover;" onerror="this.outerHTML='<div class=\'modal-main-img ph-2\'>🎉</div>'"/>
+        <p class="modal-desc-label">Sobre el proyecto</p>
+        <div class="modal-desc">
+          <p>"Los Perros Criollos" es una pieza gráfica promocional desarrollada para comunicar de manera impactante el éxito de convocatoria de un evento musical. El diseño busca captar la atención del público mediante una composición dinámica, elementos visuales llamativos y una identidad gráfica coherente con la energía del espectáculo.</p>
+          <p>La propuesta combina fotografía, tipografía expresiva y recursos publicitarios para transmitir el mensaje principal de forma rápida y efectiva. El resultado es una pieza visual que fortalece la comunicación del evento y genera interés en la audiencia objetivo.</p>
+        </div>
+      </div>
+      <div>
+        <div class="info-card">
+          <h4>Detalles</h4>
+          <div class="info-row"><span>Categoría</span><span>Flyer Promocional</span></div>
+          <div class="info-row"><span>Año</span><span>2026</span></div>
+          <div class="info-row"><span>Tipo</span><span>Personal</span></div>
+          <div class="info-row"><span>Formato</span><span>Digital / Impreso</span></div>
+        </div>
+        <div class="info-card">
+          <h4>Herramientas</h4>
+          <div class="tools-wrap">
+            <span class="tool-badge">Photoshop</span>
+            <span class="tool-badge">Illustrator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ouija -->
+<div class="modal-overlay" id="modal-ouija">
+  <div class="modal">
+    <div class="modal-hero">
+      <button class="modal-close" onclick="cerrarModal('ouija')">✕</button>
+      <p class="modal-tag">Portada Conceptual</p>
+      <h2 class="modal-title">Ouija</h2>
+      <p class="modal-subtitle">Diseño cinematográfico conceptual para transmitir misterio, tensión y atmósfera visual mediante composición dramática.</p>
+    </div>
+    <div class="modal-body">
+      <div>
+        <img src="img/Ouija-2.jpg" class="modal-main-img" alt="Ouija" style="object-fit:cover;" onerror="this.outerHTML='<div class=\'modal-main-img ph-3\'>🔮</div>'"/>
+        <p class="modal-desc-label">Sobre el proyecto</p>
+        <div class="modal-desc">
+          <p>"Ouija" es una portada conceptual desarrollada con el propósito de transmitir sensaciones de misterio, tensión y suspenso a través de recursos visuales cinematográficos. La composición fue construida para generar intriga desde el primer vistazo, utilizando contrastes, iluminación dramática y elementos simbólicos relacionados con la narrativa del terror psicológico.</p>
+          <p>El proyecto explora cómo el diseño visual puede comunicar emociones y anticipar la atmósfera de una historia, convirtiendo la imagen en una herramienta narrativa capaz de despertar la curiosidad del espectador.</p>
+        </div>
+      </div>
+      <div>
+        <div class="info-card">
+          <h4>Detalles</h4>
+          <div class="info-row"><span>Categoría</span><span>Portada Conceptual</span></div>
+          <div class="info-row"><span>Año</span><span>2026</span></div>
+          <div class="info-row"><span>Tipo</span><span>Personal</span></div>
+          <div class="info-row"><span>Formato</span><span>Digital</span></div>
+        </div>
+        <div class="info-card">
+          <h4>Herramientas</h4>
+          <div class="tools-wrap">
+            <span class="tool-badge">Photoshop</span>
+            <span class="tool-badge">Lightroom</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Vino -->
+<div class="modal-overlay" id="modal-vino">
+  <div class="modal">
+    <div class="modal-hero">
+      <button class="modal-close" onclick="cerrarModal('vino')">✕</button>
+      <p class="modal-tag">Dirección Fotográfica</p>
+      <h2 class="modal-title">Arte Visual</h2>
+      <p class="modal-subtitle">Creación de imágenes con intención estética y narrativa, donde la fotografía es una extensión del diseño y la comunicación visual.</p>
+    </div>
+    <div class="modal-body">
+      <div>
+        <img src="img/vino-2.jpg" class="modal-main-img" alt="Arte Visual" style="object-fit:cover;" onerror="this.outerHTML='<div class=\'modal-main-img ph-4\'>📸</div>'"/>
+        <p class="modal-desc-label">Sobre el proyecto</p>
+        <div class="modal-desc">
+          <p>"Arte Visual" corresponde a una propuesta de dirección fotográfica enfocada en la creación de imágenes con intención estética y narrativa. El proyecto busca explorar la relación entre composición, iluminación y expresión visual para construir fotografías capaces de comunicar emociones e ideas más allá de la simple representación del objeto o la escena.</p>
+          <p>A través del control de los elementos visuales y la planificación de cada toma, se desarrolló una serie de imágenes donde la fotografía funciona como un medio de comunicación visual y una extensión del proceso creativo.</p>
+        </div>
+      </div>
+      <div>
+        <div class="info-card">
+          <h4>Detalles</h4>
+          <div class="info-row"><span>Categoría</span><span>Dirección Fotográfica</span></div>
+          <div class="info-row"><span>Año</span><span>2026</span></div>
+          <div class="info-row"><span>Tipo</span><span>Personal</span></div>
+          <div class="info-row"><span>Formato</span><span>Fotografía Digital</span></div>
+        </div>
+        <div class="info-card">
+          <h4>Herramientas</h4>
+          <div class="tools-wrap">
+            <span class="tool-badge">Lightroom</span>
+            <span class="tool-badge">Photoshop</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function abrirModal(id){
+  document.getElementById('modal-'+id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function cerrarModal(id){
+  document.getElementById('modal-'+id).classList.remove('open');
+  document.body.style.overflow='';
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click',function(e){
+    if(e.target===this){
+      this.classList.remove('open');
+      document.body.style.overflow='';
+    }
+  });
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-overlay.open').forEach(m=>{
+      m.classList.remove('open');
+      document.body.style.overflow='';
+    });
+  }
+});
+</script>
+</body>
+</html>
